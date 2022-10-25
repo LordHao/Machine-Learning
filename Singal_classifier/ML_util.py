@@ -16,25 +16,27 @@ def plot_loss_tf(history):
     ax[1].legend(fontsize =25)
     plt.show()
 
-def bc_predict(model,x,y):
+def bc_predict(model,x):
     model_predict = lambda X: np.around(tf.nn.sigmoid(model.predict(X)).numpy())
     yhat = model_predict(x).reshape(-1)
     return yhat 
 
 def bc_eva(model,x,y):
-    y_hat = bc_predict(model,x,y)
-    tp = len(y_hat[y_hat==1])
-    tn = len(y_hat[y_hat==0])
-
-    itp = np.where(y_hat == 1)[0]
-    itn = np.where(y_hat == 0)[0]
     
-    fp = len(np.where(y[itp]==0)[0])
-    fn = len(np.where(y[itn]==1)[0])
+    y_hat = bc_predict(model,x)
+
+    idp = np.where(y_hat == 1)[0]
+    idn = np.where(y_hat == 0)[0]
+    
+    tp = len(np.where(y[idp]==1)[0])
+    tn = len(np.where(y[idn]==0)[0])
+    
+    fp = len(np.where(y[idp]==0)[0])
+    fn = len(np.where(y[idn]==1)[0])
     
     accuracy = np.mean([y_hat==y])
     print('accuracy = ', accuracy)
-    return accuracy
+    return accuracy,tp,tn,fp,fn
 
 
 
