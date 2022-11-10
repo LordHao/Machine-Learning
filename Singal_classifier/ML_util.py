@@ -39,6 +39,7 @@ def bc_eva(model,x,y):
     
     accuracy = np.mean([y_hat==y])
     
+    print('model: %s'%model.name)
     print('accuracy = ', accuracy)
     print('recall = ', recall)
     print('precision = ', precision)
