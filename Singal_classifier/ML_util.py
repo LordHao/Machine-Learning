@@ -34,13 +34,20 @@ def bc_eva(model,x,y):
     fp = len(np.where(y[idp]==0)[0])
     fn = len(np.where(y[idn]==1)[0])
     
+    recall = tp/(tp+fn); precision = tp/(tp+fp)
+    Fs = 2*recall*precision/(recall+precision)
+    
     accuracy = np.mean([y_hat==y])
+    
     print('accuracy = ', accuracy)
-    return accuracy,tp,tn,fp,fn
+    print('recall = ', recall)
+    print('precision = ', precision)
+    print('F-score = ', Fs)
+    
+    return accuracy,recall,precision,Fs
 
 
 
 def DF(df):
     pd.set_option('display.max_columns', None)
     display(df)
-    
